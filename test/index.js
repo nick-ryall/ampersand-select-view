@@ -78,7 +78,7 @@ suite('Setup', function (s) {
         t.equal(selectName, 'word');
     }));
 
-    s.test('does not trigger validation with unselectedText and no starting value', sync(function (t) {
+    s.test('does not trigger validation with `unselectedText` and no starting value', sync(function (t) {
         view = new SelectView({
             name: 'word',
             template: '<select></select>',
@@ -89,6 +89,111 @@ suite('Setup', function (s) {
 
         t.equal(view.value, undefined);
         t.equal(view.valid, undefined);
+    }));
+});
+
+suite('Utility Methods', function (s) {
+    var arr = ['one', 'two', 'three'];
+    var view;
+
+    s.test('clear', sync(function (t) {
+        view = new SelectView({
+            name: 'word',
+            options: arr,
+            value: 'two'
+        });
+
+        var select = view.el.querySelector('select');
+
+
+        t.equal(select.options[select.selectedIndex].value, 'two');
+        view.clear();
+        t.equal(select.options[select.selectedIndex].value, 'one');
+    }));
+
+    s.test('clear on view with `unselectedText`', sync(function (t) {
+        view = new SelectView({
+            name: 'word',
+            options: arr,
+            unselectedText: 'Please choose:',
+            value: 'two',
+            required: false
+        });
+
+        var select = view.el.querySelector('select');
+
+
+        t.equal(select.options[select.selectedIndex].value, 'two');
+        view.clear();
+        t.equal(select.options[select.selectedIndex].value, '');
+        t.equal(select.options[select.selectedIndex].text, 'Please choose:');
+        view.validate();
+        t.equal(view.valid, true);
+    }));
+
+    s.test('clear on `required` view with `unselectedText`', sync(function (t) {
+        view = new SelectView({
+            name: 'word',
+            options: arr,
+            unselectedText: 'Please choose:',
+            value: 'two',
+            required: true
+        });
+
+        var select = view.el.querySelector('select');
+
+
+        t.equal(select.options[select.selectedIndex].value, 'two');
+        view.clear();
+        t.equal(select.options[select.selectedIndex].value, '');
+        t.equal(select.options[select.selectedIndex].text, 'Please choose:');
+        view.validate();
+        t.equal(view.valid, false);
+    }));
+
+    s.test('reset on view with intial value', sync(function (t) {
+        view = new SelectView({
+            name: 'word',
+            options: arr,
+            value: 'three',
+            unselectedText: 'Please choose:'
+        });
+
+        var select = view.el.querySelector('select');
+
+        view.setValue('one');
+        t.equal(select.options[select.selectedIndex].value, 'one');
+        view.reset();
+        t.equal(select.options[select.selectedIndex].value, 'three');
+    }));
+
+    s.test('reset on view with no initial value', sync(function (t) {
+        view = new SelectView({
+            name: 'word',
+            options: arr
+        });
+
+        var select = view.el.querySelector('select');
+
+        view.setValue('one');
+        t.equal(select.options[select.selectedIndex].value, 'one');
+        view.reset();
+        t.equal(select.options[select.selectedIndex].value, 'one');
+    }));
+
+    s.test('reset on view with `unselectedText` and no initial value', sync(function (t) {
+        view = new SelectView({
+            name: 'word',
+            options: arr,
+            unselectedText: 'Please choose:'
+        });
+
+        var select = view.el.querySelector('select');
+
+        view.setValue('one');
+        t.equal(select.options[select.selectedIndex].value, 'one');
+        view.reset();
+        t.equal(select.options[select.selectedIndex].value, '');
     }));
 });
 

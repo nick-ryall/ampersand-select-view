@@ -54,6 +54,7 @@ function SelectView (opts) {
 
     this.el = opts.el;
     this.value = null;
+    this.startingValue = opts.value;
     this.label = opts.label || this.name;
     this.parent = opts.parent;
     this.template = opts.template || defaultTemplate;
@@ -69,10 +70,10 @@ function SelectView (opts) {
 
     this.render();
 
-    if((typeof opts.value === 'undefined') && this.unselectedText) {
-        this.setValue(opts.value, true);
+    if((typeof this.startingValue === 'undefined') && this.unselectedText) {
+        this.setValue(this.startingValue, true);
     } else {
-        this.setValue(opts.value);
+        this.setValue(this.startingValue);
     }
 }
 
@@ -176,6 +177,10 @@ SelectView.prototype.updateSelectedOption = function () {
 SelectView.prototype.remove = function () {
     if (this.el) this.el.parentNode.removeChild(this.el);
     this.el.removeEventListener('change', this.onChange, false);
+};
+
+SelectView.prototype.reset = function() {
+    this.setValue(this.startingValue, true);
 };
 
 SelectView.prototype.clear = function() {
