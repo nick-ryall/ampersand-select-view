@@ -69,7 +69,11 @@ function SelectView (opts) {
 
     this.render();
 
-    this.setValue(opts.value);
+    if((typeof opts.value === 'undefined') && this.unselectedText) {
+        this.setValue(opts.value, true);
+    } else {
+        this.setValue(opts.value);
+    }
 }
 
 SelectView.prototype.render = function () {
@@ -98,6 +102,7 @@ SelectView.prototype.render = function () {
     }
 
     this.rendered = true;
+    return this;
 };
 
 SelectView.prototype.onChange = function () {
@@ -202,9 +207,19 @@ SelectView.prototype.setValue = function (value, skipValidation) {
     }
 
     this.value = value;
-    if(!skipValidation) this.validate();
+
+    if(skipValidation) {
+        this.clearMessage();
+    } else {
+        this.validate();
+    }
+
     this.updateSelectedOption();
     if (this.parent) this.parent.update(this);
+};
+
+SelectView.prototype.beforeSubmit = function () {
+    this.validate();
 };
 
 SelectView.prototype.validate = function () {
@@ -289,6 +304,18 @@ SelectView.prototype.setMessage = function (message) {
         dom.addClass(this.el, this.validClass);
         dom.removeClass(this.el, this.invalidClass);
     }
+};
+
+SelectView.prototype.clearMessage = function () {
+    var mContainer = this.el.querySelector('[data-hook~=message-container]');
+    var mText = this.el.querySelector('[data-hook~=message-text]');
+
+    if (!mContainer || !mText) return;
+
+    dom.removeClass(this.el, this.validClass);
+    dom.removeClass(this.el, this.invalidClass);
+    dom.hide(mContainer);
+    mText.textContent = '';
 };
 
 function createOption (value, text, disabled) {

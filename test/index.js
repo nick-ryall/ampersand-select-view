@@ -77,6 +77,19 @@ suite('Setup', function (s) {
         var selectName = view.el.querySelector('select').getAttribute('name');
         t.equal(selectName, 'word');
     }));
+
+    s.test('does not trigger validation with unselectedText and no starting value', sync(function (t) {
+        view = new SelectView({
+            name: 'word',
+            template: '<select></select>',
+            options: ['foo', 'bar', 'baz'],
+            unselectedText: 'Choose a word',
+            required: true
+        });
+
+        t.equal(view.value, undefined);
+        t.equal(view.valid, undefined);
+    }));
 });
 
 suite('Options array with string items', function (s) {
