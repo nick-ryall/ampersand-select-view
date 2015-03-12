@@ -105,7 +105,6 @@ suite('Utility Methods', function (s) {
 
         var select = view.el.querySelector('select');
 
-
         t.equal(select.options[select.selectedIndex].value, 'two');
         view.clear();
         t.equal(select.options[select.selectedIndex].value, 'one');
@@ -121,7 +120,6 @@ suite('Utility Methods', function (s) {
         });
 
         var select = view.el.querySelector('select');
-
 
         t.equal(select.options[select.selectedIndex].value, 'two');
         view.clear();
@@ -141,7 +139,6 @@ suite('Utility Methods', function (s) {
         });
 
         var select = view.el.querySelector('select');
-
 
         t.equal(select.options[select.selectedIndex].value, 'two');
         view.clear();
@@ -163,6 +160,7 @@ suite('Utility Methods', function (s) {
 
         view.setValue('one');
         t.equal(select.options[select.selectedIndex].value, 'one');
+        
         view.reset();
         t.equal(select.options[select.selectedIndex].value, 'three');
     }));
@@ -177,6 +175,7 @@ suite('Utility Methods', function (s) {
 
         view.setValue('one');
         t.equal(select.options[select.selectedIndex].value, 'one');
+
         view.reset();
         t.equal(select.options[select.selectedIndex].value, 'one');
     }));
@@ -192,6 +191,7 @@ suite('Utility Methods', function (s) {
 
         view.setValue('one');
         t.equal(select.options[select.selectedIndex].value, 'one');
+
         view.reset();
         t.equal(select.options[select.selectedIndex].value, '');
     }));
