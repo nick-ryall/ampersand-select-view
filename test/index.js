@@ -129,6 +129,23 @@ suite('Utility Methods', function (s) {
         t.equal(view.valid, true);
     }));
 
+    s.test('clear on `required` view`', sync(function (t) {
+        view = new SelectView({
+            name: 'word',
+            options: arr,
+            value: 'two',
+            required: true
+        });
+
+        var select = view.el.querySelector('select');
+
+        t.equal(select.options[select.selectedIndex].value, 'two');
+        view.clear();
+        t.equal(select.options[select.selectedIndex].value, 'one');
+        view.validate();
+        t.equal(view.valid, true);
+    }));
+
     s.test('clear on `required` view with `unselectedText`', sync(function (t) {
         view = new SelectView({
             name: 'word',

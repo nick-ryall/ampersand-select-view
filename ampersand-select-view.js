@@ -70,8 +70,8 @@ function SelectView (opts) {
 
     this.render();
 
-    if((typeof this.startingValue === 'undefined') && this.unselectedText) {
-        this.setValue(this.startingValue, true);
+    if((typeof this.startingValue === 'undefined') && this.required) {
+        this.clear();
     } else {
         this.setValue(this.startingValue);
     }
@@ -180,11 +180,19 @@ SelectView.prototype.remove = function () {
 };
 
 SelectView.prototype.reset = function() {
-    this.setValue(this.startingValue, true);
+    if(this.startingValue) {
+        this.setValue(this.startingValue, true);
+    } else {
+        this.clear();
+    }
 };
 
 SelectView.prototype.clear = function() {
-    this.setValue(undefined, true);
+    if(this.unselectedText) {
+        this.setValue(undefined, true);
+    } else {
+        this.setValue(this.select.options[0].value, true);
+    }
 };
 
 SelectView.prototype.setValue = function (value, skipValidation) {
