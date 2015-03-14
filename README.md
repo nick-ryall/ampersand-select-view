@@ -95,12 +95,12 @@ $('[name=numbers]').jQueryPlugin({
 
 ### reset `selectView.reset()`
 
-Set value to back original value. If you passed a `value` when creating the view it will reset to that. Otherwise it will reset to the value of first option or the `unseletedText` option if specified.
+Set value to back original value. If you passed a `value` when creating the view it will reset to that. Otherwise it will set to `undefined` if `unseletedText` is specified or falls back to the value of the first passed in `option`.
 
 
 ### clear `selectView.clear()`
 
-Sets value to `undefined` if there is an 'unselectedText' option specified. Otherwise it will be set to the value of first option.
+Sets value to `undefined` if 'unselectedText' is specified or falls back to the value of the first passed in `option`.
 
 ## browser support
 
