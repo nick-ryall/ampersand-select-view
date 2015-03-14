@@ -66,6 +66,41 @@ module.exports = FormView.extend({
 });
 
 ```
+## API Reference
+
+### setValue `selectView.setValue([value], [skipValidation|bool])`
+
+Setter for value that will fire all appropriate handlers/tests. Called by user input or can be used to set `value` manually.
+
+Passing `true` as second argument will skip validation. This is mainly for internal use.
+
+#### Setting select.value on non-user input
+This module assumes that the value of the select element will be set by the user.  This is the only event that can be reliably listened for on an select element.  If you have a third-party library (i.e. Bootstrap or jQuery) that is going to be affecting the select value directly you will need to let your model know about the change via `setValue`.
+
+```javascript
+var mySelect = new SelectView({
+    options: ['one', 'two', 'three']
+    name: 'numbers'
+});
+mySelect.render();
+document.body.appendChild(mySelect.el);
+
+$('[name=numbers]').jQueryPlugin({
+    onSelect: function (value) {
+        mySelect.setValue(value);
+    }
+});
+ 
+```
+
+### reset `selectView.reset()`
+
+Set value to back original value. If you passed a `value` when creating the view it will reset to that, otherwise to `undefined` which will select the first option or the `unseletedText` option if specified.
+
+
+### clear `selectView.clear()`
+
+Sets value to `undefined` no matter what previous values were. This will select the first option or the `unseletedText` option if specified.
 
 ## browser support
 

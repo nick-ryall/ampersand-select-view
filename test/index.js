@@ -173,8 +173,8 @@ suite('Utility Methods', function (s) {
 
         var select = view.el.querySelector('select');
 
-        view.setValue('one');
-        t.equal(select.options[select.selectedIndex].value, 'one');
+        view.setValue('three');
+        t.equal(select.options[select.selectedIndex].value, 'three');
 
         view.reset();
         t.equal(select.options[select.selectedIndex].value, 'one');

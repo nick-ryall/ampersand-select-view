@@ -184,7 +184,7 @@ SelectView.prototype.reset = function() {
 };
 
 SelectView.prototype.clear = function() {
-    this.setValue('', true);
+    this.setValue(undefined, true);
 };
 
 SelectView.prototype.setValue = function (value, skipValidation) {
