@@ -110,6 +110,17 @@ suite('Utility Methods', function (s) {
         t.equal(select.options[select.selectedIndex].value, 'one');
     }));
 
+    s.test('clear with empty options specified', sync(function (t) {
+        view = new SelectView({
+            name: 'word',
+            value: 'two',
+            options: []
+        });
+
+        view.clear();
+        t.equal(view.value, undefined);
+    }));
+
     s.test('clear on view with `unselectedText`', sync(function (t) {
         view = new SelectView({
             name: 'word',
