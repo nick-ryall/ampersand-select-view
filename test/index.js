@@ -78,6 +78,41 @@ suite('Setup', function (s) {
         t.equal(selectName, 'word');
     }));
 
+    s.test('does not trigger validation on initialization with no starting `value`', sync(function (t) {
+        view = new SelectView({
+            name: 'word',
+            template: '<select></select>',
+            options: ['foo', 'bar', 'baz'],
+            required: true
+        });
+
+        t.equal(view.valid, undefined);
+        view.beforeSubmit();
+        t.equal(view.valid, true);
+    }));
+
+    s.test('does trigger validation on initialization with starting `value`', sync(function (t) {
+        var validView = new SelectView({
+            name: 'word',
+            template: '<select></select>',
+            options: ['foo', 'bar', 'baz'],
+            required: true,
+            value: 'baz'
+        });
+
+        var invalidView = new SelectView({
+            name: 'word',
+            template: '<select></select>',
+            options: ['foo', 'bar', 'baz'],
+            required: true,
+            value: 'boz'
+        });
+
+        t.equal(validView.valid, true);
+        t.equal(invalidView.valid, false);
+    }));
+
+
     s.test('does not trigger validation with `unselectedText` and no starting value', sync(function (t) {
         view = new SelectView({
             name: 'word',
